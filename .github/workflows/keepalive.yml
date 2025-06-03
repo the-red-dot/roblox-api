@@ -1,0 +1,15 @@
+name: Keep Render dyno awake
+
+on:
+  schedule:
+    # every 10 minutes (GitHub Actions uses UTC)
+    - cron: '*/10 * * * *'
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Curl the Render service
+        run: |
+          curl -fsSL "https://roblox-api-67sv.onrender.com/get_user_id?username=builderman" \
+          || echo "Ping failed (service may be asleep or redeploying)"
